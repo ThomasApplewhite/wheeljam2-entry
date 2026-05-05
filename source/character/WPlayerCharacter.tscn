@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://c15cdg3o5fl7s"]
+
+[ext_resource type="Script" uid="uid://dvmub77gigqv6" path="res://source/character/w_player_character.gd" id="1_2nw7k"]
+[ext_resource type="Script" uid="uid://b1vv7wqamups4" path="res://addons/character-controller/fps/head_movement_3d.gd" id="2_x2gix"]
+[ext_resource type="Script" uid="uid://dj8mdvjk8fldy" path="res://addons/character-controller/fps/bob/head_bob.gd" id="3_wuhjj"]
+[ext_resource type="Curve" path="res://addons/character-controller/fps/bob/bob_curve.tres" id="4_68goq"]
+[ext_resource type="Script" uid="uid://ces06fic53xcg" path="res://source/character/w_dodge_ability.gd" id="5_wuhjj"]
+[ext_resource type="Script" uid="uid://5rsltlis8hfc" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="6_ek3yv"]
+[ext_resource type="Script" uid="uid://ulyoeaxbl23n" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="7_76jla"]
+[ext_resource type="Script" uid="uid://drn2mhrkcp474" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="8_phaoh"]
+[ext_resource type="Script" uid="uid://bx7pp0eao8dne" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="9_klhe0"]
+[ext_resource type="Script" uid="uid://bhhgclxxaf853" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="10_dbxly"]
+[ext_resource type="Script" uid="uid://brs53isg6clxe" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="11_hw3yl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_80ktp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nn047"]
+
+[node name="WPlayerCharacter" type="CharacterBody3D" unique_id=624020235]
+script = ExtResource("1_2nw7k")
+metadata/_custom_type_script = "uid://dvmub77gigqv6"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1814369018]
+shape = SubResource("CapsuleShape3D_80ktp")
+
+[node name="Head Check" type="ShapeCast3D" parent="." unique_id=1073774115]
+shape = SubResource("SphereShape3D_nn047")
+target_position = Vector3(0, 0.5, 0)
+
+[node name="Head" type="Marker3D" parent="." unique_id=2103059292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+script = ExtResource("2_x2gix")
+
+[node name="Head Bob" type="Node" parent="Head" unique_id=1246679088]
+script = ExtResource("3_wuhjj")
+head_path = NodePath("../FirstPersonCameraReference")
+bob_curve = ExtResource("4_68goq")
+
+[node name="FirstPersonCameraReference" type="Marker3D" parent="Head" unique_id=638949349]
+
+[node name="ThirdPersonCameraReference" type="Marker3D" parent="Head" unique_id=377057843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="WDodgeAbility3D" type="Node3D" parent="." unique_id=1868815071]
+script = ExtResource("5_wuhjj")
+metadata/_custom_type_script = "uid://ces06fic53xcg"
+
+[node name="Walk Ability 3D" type="Node3D" parent="." unique_id=620542731]
+script = ExtResource("6_ek3yv")
+
+[node name="Sprint Ability 3D" type="Node3D" parent="." unique_id=1423527262]
+script = ExtResource("7_76jla")
+
+[node name="Crouch Ability 3D" type="Node3D" parent="." unique_id=217925087]
+script = ExtResource("8_phaoh")
+
+[node name="Jump Ability 3D" type="Node3D" parent="." unique_id=267237207]
+script = ExtResource("9_klhe0")
+
+[node name="Fly Ability 3D" type="Node3D" parent="." unique_id=2005880712]
+script = ExtResource("10_dbxly")
+
+[node name="Swim Ability 3D" type="Node3D" parent="." unique_id=1040933676]
+script = ExtResource("11_hw3yl")
+
+[node name="RayCast3D" type="RayCast3D" parent="Swim Ability 3D" unique_id=13337050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 8
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
