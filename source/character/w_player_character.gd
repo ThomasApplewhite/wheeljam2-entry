@@ -4,14 +4,13 @@ class_name WPlayerCharacter
 ## This script is a copy of the expressobits controller, because there's really no reason to
 ## reinvent the wheel
 
+signal player_slain()
+
 @export var input_back_action_name := "move_backward"
 @export var input_forward_action_name := "move_forward"
 @export var input_left_action_name := "move_left"
 @export var input_right_action_name := "move_right"
-#@export var input_sprint_action_name := "move_sprint"
-#@export var input_jump_action_name := "move_jump"
-#@export var input_crouch_action_name := "move_crouch"
-#@export var input_fly_mode_action_name := "move_fly_mode"
+@export var max_hp : int = 100
 
 @onready var dodge_ability : WDodgeAbility3D = $WDodgeAbility3D
 @onready var camera_ref : Marker3D = $Head
@@ -19,6 +18,8 @@ class_name WPlayerCharacter
 @onready var wheel : Wheel = $Control/Wheel
 @onready var debug_label : Label = $Control/Label
 @onready var col_handler : CollisionHandler = $CollisionHandler
+
+@onready var hp : int = max_hp
 
 #this should be set automatically but who really cares
 @export var ztarget : Node3D
@@ -79,7 +80,9 @@ func _on_wheel_new_dir_selected() -> void:
 
 
 func _on_collision_handler_strike_taken(damage: int) -> void:
-	pass # Replace with function body.
+	hp -= damage
+	if hp >= 0:
+		player_slain.emit()
 
 
 func _on_collision_handler_strike_blocked() -> void:
