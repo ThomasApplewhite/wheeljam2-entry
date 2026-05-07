@@ -1,11 +1,12 @@
 extends Node
 class_name CollisionHandler
 
-signal strike_blocked()
+signal strike_blocked(attack_commitment : int)
 signal strike_taken(damage : int)
 
 
-func resolve_strike(our_pos: Vector3, hit_pos: Vector3, block_quad, can_block: bool, incoming_damage : int) -> void:
+func resolve_strike(our_pos: Vector3, hit_pos: Vector3, block_quad : int, can_block: bool, 
+	incoming_damage : int, incoming_commitment : int) -> bool:
 	# Step 1: Calculate the hit angle
 	# The wheel has up = 0 and goes clockwise, so this does too.
 	var hit_directon : Vector3 = hit_pos - our_pos
@@ -32,8 +33,9 @@ func resolve_strike(our_pos: Vector3, hit_pos: Vector3, block_quad, can_block: b
 	# Step 3: Resolve the attack
 	if hit_quad == block_quad and can_block:
 		# play blocking anims/signals if needed
-		strike_blocked.emit()
-		return
+		strike_blocked.emit(incoming_commitment)
+		return true
 	
 	# Send all signals related to getting attacked
 	strike_taken.emit(incoming_damage)
+	return false

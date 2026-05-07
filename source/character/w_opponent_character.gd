@@ -6,8 +6,6 @@ class_name WOpponentCharacter
 ## that'll be done before the week is out
 ## jk I actually made the inheritence
 
-var current_stance_direction : int
-
 
 func _physics_process(delta):
 	# rotate head to face z target
@@ -24,10 +22,6 @@ func _physics_process(delta):
 		move(delta, input_axis, false, false, false, false, false)
 	else:
 		move(delta)
-
-
-func receive_strike(hit_pos: Vector3, incoming_commitment : int, incoming_damage : int) -> void:
-	col_handler.resolve_strike(position, hit_pos, current_stance_direction, true, incoming_damage)
 
 
 # We might simulate a wheel for the opponent character? but it will need

@@ -7,7 +7,7 @@ class_name WPlayerCharacter
 @export var input_forward_action_name := "move_forward"
 @export var input_left_action_name := "move_left"
 @export var input_right_action_name := "move_right"
-
+@export var input_parry_mode_name := "parry_mode"
 
 # the wheel handles its own input, we only need to respond to it. praise be.
 @onready var wheel : Wheel = $Control/Wheel
@@ -39,9 +39,9 @@ func _physics_process(delta):
 		move(delta)
 
 
-func receive_strike(hit_pos: Vector3, incoming_commitment : int, incoming_damage : int) -> void:
-	col_handler.resolve_strike(position, hit_pos, wheel.current_direction, true, incoming_damage)
-
+func get_current_stance() -> SwordStance:
+	var i = wheel.current_direction / 90
+	return i as SwordStance
 
 """
 #region WheelPayload Class
@@ -51,17 +51,32 @@ class WheelPayload:
 	var slice_value:int
 	var total_value:int
 #endregion
-var current_direction:int = 0 ## where the selector currently is.
-const DIRECTIONS:Array[int] = [0,90,180,270] ## rotation value (in degrees) for the wheel directions. [UP,RIGHT,DOWN,LEFT]
 """
 # Wheel Slice selected
 func _on_wheel_new_dir_chosen(payload: RefCounted) -> void:
-	#attacks go here, the above payload can be used to calculate wheel value
-	pass
+	# Step 0: Can we even attack?
+	if current_state != ActionState.BLOCKING:
+		return
+	
+	# Step 1: Is this a parry?
+	var is_parry : bool = Input.is_action_pressed(input_parry_mode_name)
+	
+	# If parrying, enter parry state
+	# whatever that means
+	if is_parry:
+		return
+	
+	# What is damage? idk, put 10 here for now
+	sword.start_attack_active(payload.slice_value, 10)
+		
+	# start animation; time it out based on commitment. When it's over
+	# (or, some % through it), turn the attack off
+	
+	# oh, and if the wheel is full, it should be reset after striking or parrying
 
 
 # Wheel rotated
 func _on_wheel_new_dir_selected() -> void:
 	var text = "Wheel direction: %d" % wheel.current_direction
 	debug_label.text = text
-	#change stance here
+	# stance change anim here
