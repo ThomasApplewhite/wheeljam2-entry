@@ -7,8 +7,8 @@ extends Node
 @export var rounds_to_win : int
 
 @export_category("Scene Exports")
-@export var opponent : WOpponentCharacter
-@export var player : WPlayerCharacter
+@export var opponent : WCharacter
+@export var player : WCharacter
 
 @export var opponent_start : Marker3D
 @export var player_start : Marker3D
@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 	restart_ui_bar.value = restart_timer.time_left
 
 
-func prerestart_round(winner : Node3D) -> void:
+func prerestart_round(winner : WCharacter) -> void:
 	_rounds += 1
 	if winner == player:
 		_player_wins += 1
@@ -76,11 +76,7 @@ func _on_pre_restart_timer_timeout() -> void:
 		return
 	
 	restart_round()
-	
-	
-func _on_w_player_character_player_slain() -> void:
-	prerestart_round(opponent)
 
 
-func _on_w_opponent_character_opponent_slain() -> void:
-	prerestart_round(player)
+func _on_w_character_slain(who: WCharacter) -> void:
+	prerestart_round(who)

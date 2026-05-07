@@ -175,8 +175,8 @@ directional_shadow_max_distance = 250.0
 [node name="MouseHandler" type="Node3D" parent="." unique_id=349218550]
 script = ExtResource("6_5r52i")
 
-[connection signal="player_slain" from="WPlayerCharacter" to="." method="_on_w_player_character_player_slain"]
-[connection signal="opponent_slain" from="WOpponentCharacter" to="." method="_on_w_opponent_character_opponent_slain"]
+[connection signal="slain" from="WPlayerCharacter" to="." method="_on_w_character_slain"]
+[connection signal="slain" from="WOpponentCharacter" to="." method="_on_w_character_slain"]
 [connection signal="timeout" from="Timers/RestartTimer" to="." method="_on_restart_timer_timeout"]
 [connection signal="timeout" from="Timers/PreRestartTimer" to="." method="_on_pre_restart_timer_timeout"]
 [connection signal="pressed" from="GameUI/DebugControl/StrikePlayerButton" to="GameUI/DebugControl" method="_on_strike_player_button_pressed"]

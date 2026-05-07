@@ -1,35 +1,12 @@
-extends FPSController3D
+extends WCharacter
 class_name WOpponentCharacter
 
 ## This script is a copy of the player copy of the expressobits controller
 ## because there's really no reason to have a robust inheretence system in a game
 ## that'll be done before the week is out
-
-signal opponent_slain()
-
-@export var max_hp : int = 100
-
-@onready var dodge_ability : WDodgeAbility3D = $WDodgeAbility3D
-@onready var camera_ref : Marker3D = $Head
-# the wheel handles its own input, we only need to respond to it. praise be.
-#@onready var wheel : Wheel = $Control/Wheel
-#@onready var debug_label : Label = $Control/Label
-@onready var col_handler : CollisionHandler = $CollisionHandler
-
-@onready var hp : int = max_hp
-
-#this should be set automatically but who really cares
-@export var ztarget : Node3D
-#@export var show_debug_values : bool = true
+## jk I actually made the inheritence
 
 var current_stance_direction : int
-var lock_movement : bool = false
-
-
-func _ready():
-	setup()
-	_abilities.append(dodge_ability)
-	
 
 
 func _physics_process(delta):
@@ -49,7 +26,7 @@ func _physics_process(delta):
 		move(delta)
 
 
-func receive_strike(hit_pos: Vector3, incoming_damage : int) -> void:
+func receive_strike(hit_pos: Vector3, incoming_commitment : int, incoming_damage : int) -> void:
 	col_handler.resolve_strike(position, hit_pos, current_stance_direction, true, incoming_damage)
 
 
@@ -58,13 +35,3 @@ func receive_strike(hit_pos: Vector3, incoming_damage : int) -> void:
 # once we have a more concrete idea of what inputs do what and what about
 # the wheel needs to be simulated. If needed, wheel methods can just be copied
 # from the player
-
-func _on_collision_handler_strike_taken(damage: int) -> void:
-	hp -= damage
-	if hp <= 0:
-		opponent_slain.emit()
-		lock_movement = true
-
-
-func _on_collision_handler_strike_blocked() -> void:
-	pass # Replace with function body.

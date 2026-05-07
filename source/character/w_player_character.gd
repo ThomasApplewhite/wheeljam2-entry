@@ -1,38 +1,24 @@
-extends FPSController3D
+extends WCharacter
 class_name WPlayerCharacter
 
-## This script is a copy of the expressobits controller, because there's really no reason to
-## reinvent the wheel
-
-signal player_slain()
+## The player character!
 
 @export var input_back_action_name := "move_backward"
 @export var input_forward_action_name := "move_forward"
 @export var input_left_action_name := "move_left"
 @export var input_right_action_name := "move_right"
-@export var max_hp : int = 100
 
-@onready var dodge_ability : WDodgeAbility3D = $WDodgeAbility3D
-@onready var camera_ref : Marker3D = $Head
+
 # the wheel handles its own input, we only need to respond to it. praise be.
 @onready var wheel : Wheel = $Control/Wheel
 @onready var debug_label : Label = $Control/Label
-@onready var col_handler : CollisionHandler = $CollisionHandler
 
-@onready var hp : int = max_hp
-
-#this should be set automatically but who really cares
-@export var ztarget : Node3D
 @export var show_debug_values : bool = true
 
-var lock_movement : bool = false
 
-
-func _ready():
+func _ready() -> void:
+	super()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	setup()
-	_abilities.append(dodge_ability)
-	
 
 
 func _physics_process(delta):
@@ -53,7 +39,7 @@ func _physics_process(delta):
 		move(delta)
 
 
-func receive_strike(hit_pos: Vector3, incoming_damage : int) -> void:
+func receive_strike(hit_pos: Vector3, incoming_commitment : int, incoming_damage : int) -> void:
 	col_handler.resolve_strike(position, hit_pos, wheel.current_direction, true, incoming_damage)
 
 
@@ -79,14 +65,3 @@ func _on_wheel_new_dir_selected() -> void:
 	var text = "Wheel direction: %d" % wheel.current_direction
 	debug_label.text = text
 	#change stance here
-
-
-func _on_collision_handler_strike_taken(damage: int) -> void:
-	hp -= damage
-	if hp <= 0:
-		player_slain.emit()
-		lock_movement = true
-
-
-func _on_collision_handler_strike_blocked() -> void:
-	pass # Replace with function body.
