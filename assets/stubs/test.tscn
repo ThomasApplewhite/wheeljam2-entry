@@ -373,8 +373,6 @@ directional_shadow_max_distance = 250.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7804165, 0)
 ztarget = NodePath("../Dummy")
 
-[node name="Camera3D" type="Camera3D" parent="WPlayerCharacter/Head/FirstPersonCameraReference" parent_id_path=PackedInt32Array(624020235, 638949349) index="0" unique_id=551137147]
-
 [node name="Dummy" type="MeshInstance3D" parent="." unique_id=51923401]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0405321, -7.0750256)
 mesh = SubResource("CapsuleMesh_0qjh8")
