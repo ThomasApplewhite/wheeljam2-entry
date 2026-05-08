@@ -1,0 +1,47 @@
+[gd_scene format=4 uid="uid://t4xgc3vq1qjm"]
+
+[ext_resource type="Material" uid="uid://dtl07yw8j1pgb" path="res://Assets/LoafbrrAssets/ModularArena/Materials/Ground_Soil_Mat.tres" id="1_fs25h"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4ni18"]
+_surfaces = [{
+"aabb": AABB(-0.99999976, 0, -0.5000001, 2, 1e-05, 1),
+"format": 34896613377,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAADAAAABAAFAAMA"),
+"name": "Ground_Soil",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("/38AAP//AAD//wAAAAAAAP//AAD//wAA/38AAAAAAAAAAAAA//8AAAAAAAAAAAAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cesgu"]
+resource_name = "ModularArena_Ground_A_1x2"
+_surfaces = [{
+"aabb": AABB(-0.99999976, 0, -0.5000001, 2, 1e-05, 1),
+"attribute_data": PackedByteArray("VVX//6mqqaqqqv//VFWpqgAA//8AAKqq"),
+"format": 34896613399,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAADAAAABAAFAAMA"),
+"material": ExtResource("1_fs25h"),
+"name": "Ground_Soil",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("/38AAP///7///wAAAAD/v///AAD///+//38AAAAA/78AAAAA////vwAAAAAAAP+/////f////3////9/////f////3/+//9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_4ni18")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mj5ve"]
+data = PackedVector3Array(0, 0, 0.5, 1, 0, -0.5, 1, 0, 0.5, 0, 0, 0.5, 0, 0, -0.5, 1, 0, -0.5, -1, 0, 0.5, 0, 0, -0.5, 0, 0, 0.5, -1, 0, 0.5, -1, 0, -0.5, 0, 0, -0.5)
+
+[node name="Ground_A_1x2" type="MeshInstance3D" unique_id=1422549037]
+mesh = SubResource("ArrayMesh_cesgu")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=390797880]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1161878215]
+shape = SubResource("ConcavePolygonShape3D_mj5ve")
