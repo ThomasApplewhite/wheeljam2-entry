@@ -1,0 +1,16 @@
+[gd_resource type="Theme" format=3 uid="uid://d1ljat6j7kbqy"]
+
+[ext_resource type="Texture2D" uid="uid://nhjbxcows32c" path="res://assets/ui/Dragonhpbar.png" id="1_ib6tx"]
+[ext_resource type="FontFile" uid="uid://dywtkwkh33yuu" path="res://assets/ui/antiquity-print.ttf" id="2_fenpc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omlnh"]
+atlas = ExtResource("1_ib6tx")
+region = Rect2(787, 1, 105, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lvrds"]
+texture = SubResource("AtlasTexture_omlnh")
+
+[resource]
+default_font = ExtResource("2_fenpc")
+Button/colors/font_color = Color(0, 0, 0, 1)
+ProgressBar/styles/background = SubResource("StyleBoxTexture_lvrds")

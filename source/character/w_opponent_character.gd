@@ -36,6 +36,7 @@ var _unused_indicies : Array[int] = [0, 1, 2, 3]
 var _current_wheel_index : int = 0
 
 @onready var brain : WOpponentDecisionTree = WOpponentDecisionTree.new()
+@onready var audio_swing = $AudioSwing
 
 func _ready() -> void:
 	super()
@@ -106,6 +107,8 @@ func _change_stance_and_attack() -> void:
 	
 	# What is damage? idk, put 10 here for now
 	sword.start_attack_active(_wheel_values[_current_wheel_index], 10)
+	if audio_swing.playing != true:
+		audio_swing.playing = true
 	current_state = ActionState.STRIKING
 	# hell yeah brother it's the inline dictionary lookup
 	var attack_speed : float = {
