@@ -69,7 +69,8 @@ func evaluate_and_act(player_stance_int : int, my_stance_int : int,
 
 
 func get_desired_dodge_dir() -> Vector2:
-	return [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT][_desired_move_dir]
+	#return [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT][_desired_move_dir]
+	return [Vector2.DOWN, Vector2.LEFT, Vector2.UP, Vector2.RIGHT][_desired_move_dir]
 
 
 func get_desired_stance() -> StanceEval:

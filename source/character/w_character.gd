@@ -66,12 +66,15 @@ func get_current_stance() -> SwordStance:
 
 func _look_at_ztarget() -> void:
 	# rotate head to face z target
+	look_at(ztarget.global_position)
+	"""
 	var forward = -transform.basis.z
 	var dir_to_target = (ztarget.global_position - global_position).normalized()
 	dir_to_target.y = 0.0
 	var rotate_dir = (dir_to_target - forward)
 	if(dir_to_target.dot(forward) != 1.0):
 		rotate_head(Vector2(rotate_dir.x, rotate_dir.y) * 100.0)
+	"""
 
 
 func _on_collision_handler_strike_taken(damage: int) -> void:
