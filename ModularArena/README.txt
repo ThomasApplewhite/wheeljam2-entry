@@ -11,5 +11,3 @@ check for updates here https://bsky.app/profile/loafbrr.bsky.social ; https://tw
 or support by buying my other assets here, giving a tip on loafbrr.itch.io or 
 
 https://ko-fi.com/loafbrrrrrr001
-
-

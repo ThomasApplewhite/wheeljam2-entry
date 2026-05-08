@@ -10,6 +10,7 @@ const NO_PARRY : int = -99
 
 @export var max_hp : int = 100
 @export var sword : WSwordHitbox
+@export var anim_handler : AnimationHandler
 
 @onready var dodge_ability : WDodgeAbility3D = $WDodgeAbility3D
 @onready var camera_ref : Marker3D = $Head
@@ -58,7 +59,7 @@ func receive_strike(hit_pos: Vector3, incoming_commitment : int, incoming_damage
 	return NO_PARRY
 
 
-# similarly "should be abstract but w/e" type method
+# "should be abstract but w/e" type method
 func get_current_stance() -> SwordStance:
 	return SwordStance.NORTH
 
@@ -72,11 +73,14 @@ func _look_at_ztarget() -> void:
 	if(dir_to_target.dot(forward) != 1.0):
 		rotate_head(Vector2(rotate_dir.x, rotate_dir.y) * 100.0)
 
+
 func _on_collision_handler_strike_taken(damage: int) -> void:
 	hp -= damage
 	if hp <= 0:
 		slain.emit(self)
 		lock_movement = true
+		var stance = get_current_stance() as AnimationHandler.SwordStance
+		anim_handler.play_action_animation(AnimationHandler.AnimatedAction.DIE, stance)
 
 
 func _on_collision_handler_strike_blocked(attack_commitment : int) -> void:
@@ -93,3 +97,7 @@ func _on_parried() -> void:
 	# get parried loser: set to stun state (which blocks all inputs except stepping)
 	# and restore after a timer passes.
 	pass
+
+
+func _on_animation_handler_action_animation_finished(_anim_name : String) -> void:
+	current_state = ActionState.BLOCKING

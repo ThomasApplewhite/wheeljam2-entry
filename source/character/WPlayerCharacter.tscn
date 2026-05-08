@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b0itbkw7cytrs" path="res://source/character/w_collision_handler.gd" id="13_phaoh"]
 [ext_resource type="PackedScene" uid="uid://ccn52rckndhkf" path="res://scenes/player.tscn" id="14_klhe0"]
 [ext_resource type="Script" uid="uid://bcfkm5dbuibi" path="res://source/game/sword_hitbox.gd" id="15_dbxly"]
+[ext_resource type="Script" uid="uid://c4dpa4xc70k1v" path="res://source/character/w_animation_handler.gd" id="16_hw3yl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_80ktp"]
 height = 2.25
@@ -24,9 +25,11 @@ height = 2.25
 [sub_resource type="BoxShape3D" id="BoxShape3D_hw3yl"]
 size = Vector3(0.05, 0.5, 0.05)
 
-[node name="WPlayerCharacter" type="CharacterBody3D" unique_id=624020235]
+[node name="WPlayerCharacter" type="CharacterBody3D" unique_id=624020235 node_paths=PackedStringArray("sword", "anim_handler")]
 collision_layer = 3
 script = ExtResource("1_2nw7k")
+sword = NodePath("Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2/HitboxArea3D")
+anim_handler = NodePath("AnimationHandler")
 metadata/_custom_type_script = "uid://dvmub77gigqv6"
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=1814369018]
@@ -116,19 +119,33 @@ metadata/_custom_type_script = "uid://b0itbkw7cytrs"
 [node name="Player" parent="." unique_id=1970805391 instance=ExtResource("14_klhe0")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.765027, 0)
 
+[node name="GeneralSkeleton" parent="Player/Player/Armature" parent_id_path=PackedInt32Array(1970805391, 62470533) index="0" unique_id=1433463299]
+bones/0/position = Vector3(0.010495451, 1.0749283, 0.008830321)
+
+[node name="BoneAttachment3D" parent="Player/Player/Armature/GeneralSkeleton" index="2" unique_id=1078028927]
+transform = Transform3D(-0.2771278, -0.008283857, 0.96074915, 0.9166628, -0.3019766, 0.2617631, 0.28792325, 0.95335156, 0.09129013, -0.07788862, 1.0946229, 0.435668)
+
 [node name="HitboxArea3D" type="Area3D" parent="Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2" parent_id_path=PackedInt32Array(1970805391, 362757077) index="2" unique_id=2048926855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68544394, 0)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("15_dbxly")
 
-[node name="CollisionShape3D" parent="Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2/HitboxArea3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2/HitboxArea3D" unique_id=400937962]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009150341, -0.2456271, 0.038652986)
 shape = SubResource("BoxShape3D_hw3yl")
+
+[node name="BoneAttachment3D2" parent="Player/Player/Armature/GeneralSkeleton" index="4" unique_id=1938016834]
+transform = Transform3D(0.99984556, -0.017568491, -0.00029054284, 0.017356496, 0.99008036, -0.13942112, 0.0027370378, 0.13939431, 0.99023324, -0.03507991, 1.6501715, 0.23717171)
+
+[node name="AnimationHandler" type="Node" parent="." unique_id=1200541799 node_paths=PackedStringArray("anim_player")]
+script = ExtResource("16_hw3yl")
+anim_player = NodePath("../Player/Player/Armature/GeneralSkeleton/AnimationPlayer")
 
 [connection signal="new_dir_chosen" from="Control/Wheel" to="." method="_on_wheel_new_dir_chosen"]
 [connection signal="new_dir_selected" from="Control/Wheel" to="." method="_on_wheel_new_dir_selected"]
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]
+[connection signal="action_animation_finished" from="AnimationHandler" to="." method="_on_animation_handler_action_animation_finished"]
 
 [editable path="Player"]

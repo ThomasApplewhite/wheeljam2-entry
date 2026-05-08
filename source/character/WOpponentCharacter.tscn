@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://b0itbkw7cytrs" path="res://source/character/w_collision_handler.gd" id="12_riy33"]
 [ext_resource type="PackedScene" uid="uid://ccn52rckndhkf" path="res://scenes/player.tscn" id="13_mms8j"]
 [ext_resource type="Script" uid="uid://bcfkm5dbuibi" path="res://source/game/sword_hitbox.gd" id="14_whdal"]
+[ext_resource type="Script" uid="uid://c4dpa4xc70k1v" path="res://source/character/w_animation_handler.gd" id="15_whdal"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p7ffv"]
 height = 2.25
@@ -25,9 +26,11 @@ height = 2.25
 [sub_resource type="BoxShape3D" id="BoxShape3D_75hop"]
 size = Vector3(0.05, 0.5, 0.05)
 
-[node name="WOpponentCharacter" type="CharacterBody3D" unique_id=1047846688]
+[node name="WOpponentCharacter" type="CharacterBody3D" unique_id=1047846688 node_paths=PackedStringArray("sword", "anim_handler")]
 collision_layer = 3
 script = ExtResource("1_p468n")
+sword = NodePath("Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2/HitboxArea3D")
+anim_handler = NodePath("AnimationHandler")
 metadata/_custom_type_script = "uid://b01ee3wqjfu5v"
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=701097188]
@@ -103,7 +106,12 @@ script = ExtResource("14_whdal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009150341, -0.2456271, 0.038652986)
 shape = SubResource("BoxShape3D_75hop")
 
+[node name="AnimationHandler" type="Node" parent="." unique_id=1434950364 node_paths=PackedStringArray("anim_player")]
+script = ExtResource("15_whdal")
+anim_player = NodePath("../Player/Player/Armature/GeneralSkeleton/AnimationPlayer")
+
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]
+[connection signal="action_animation_finished" from="AnimationHandler" to="." method="_on_animation_handler_action_animation_finished"]
 
 [editable path="Player"]

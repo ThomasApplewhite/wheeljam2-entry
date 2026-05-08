@@ -10,6 +10,10 @@ class_name WOpponentCharacter
 func _physics_process(delta):
 	_look_at_ztarget()
 	
+	# can't do anything if animating
+	if anim_handler.playing_action:
+		return
+	
 	# need to decide how AI does inputs
 	if false and not lock_movement:
 		var input_axis #= Input.get_vector(input_left_action_name, input_right_action_name, input_back_action_name, input_forward_action_name)

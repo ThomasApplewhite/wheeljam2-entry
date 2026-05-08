@@ -14,6 +14,8 @@ func _ready() -> void:
 
 
 func start_attack_active(attack_commitment : int, base_damage : int) -> void:
+	_current_commitment = attack_commitment
+	_damage = base_damage
 	set_collision_mask_value(character_hitbox_layer, true)
 
 
