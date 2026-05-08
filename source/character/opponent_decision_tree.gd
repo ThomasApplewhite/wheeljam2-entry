@@ -38,6 +38,8 @@ var _desired_move_dir : SwordStance = SwordStance.NORTH #This will be converted 
 var _desied_stance : StanceEval = StanceEval.FASTEST
 var _prepframes : int = 0
 
+var player_proximity_raycast : RayCast3D
+
 func evaluate_and_act(player_stance_int : int, my_stance_int : int, 
 	player_state_int : int, my_state_int : int) -> Intention:
 	var my_state : ActionState = my_state_int as ActionState
@@ -97,7 +99,10 @@ func _evaluate_defense(my_state : ActionState, my_stance : SwordStance,
 func _evaluate_offense(my_state : ActionState, my_stance : SwordStance, 
 	player_state : ActionState, player_stance : SwordStance) -> Intention:
 	# Move closer if the player is too far away to attack
-	# Judge that here	
+	if not player_proximity_raycast.is_colliding():
+		_current_intention = Intention.DODGE
+		_desired_move_dir = SwordStance.NORTH
+		return _current_intention
 		
 	# If player stunned, quick punish
 	_current_intention = Intention.PREP

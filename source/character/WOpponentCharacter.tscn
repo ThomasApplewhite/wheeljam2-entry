@@ -110,6 +110,10 @@ shape = SubResource("BoxShape3D_75hop")
 script = ExtResource("15_whdal")
 anim_player = NodePath("../Player/Player/Armature/GeneralSkeleton/AnimationPlayer")
 
+[node name="PlayerCLoseRayCast3D" type="RayCast3D" parent="." unique_id=351701685]
+target_position = Vector3(0, 0, -2)
+collision_mask = 2
+
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]
 [connection signal="action_animation_finished" from="AnimationHandler" to="." method="_on_animation_handler_action_animation_finished"]

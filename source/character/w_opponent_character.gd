@@ -37,6 +37,11 @@ var _current_wheel_index : int = 0
 
 @onready var brain : WOpponentDecisionTree = WOpponentDecisionTree.new()
 
+func _ready() -> void:
+	super()
+	brain.player_proximity_raycast = $PlayerCLoseRayCast3D
+	brain.player_proximity_raycast.add_exception(self)
+
 
 func _physics_process(delta):
 	_look_at_ztarget()
