@@ -16,9 +16,9 @@ extends Node
 @onready var restart_timer : Timer = $Timers/RestartTimer
 @onready var prerestart_timer : Timer = $Timers/PreRestartTimer
 
-@onready var restart_ui : Control = $GameUI/RoundRestart
-@onready var restart_ui_bar : ProgressBar = $GameUI/RoundRestart/ProgressBar
-@onready var restart_round_label : Label = $GameUI/RoundRestart/Label
+@onready var restart_ui : Control = $CanvasLayer/GameUI/RoundRestart
+@onready var restart_ui_bar : ProgressBar = $CanvasLayer/GameUI/RoundRestart/ProgressBar
+@onready var restart_round_label : Label = $CanvasLayer/GameUI/RoundRestart/Label
 
 @onready var win_jingle : AudioStreamPlayer = $GameAudio/WinAudioStreamPlayer
 @onready var lose_jingle : AudioStreamPlayer = $GameAudio/LoseAudioStreamPlayer

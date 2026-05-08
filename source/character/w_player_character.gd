@@ -10,8 +10,8 @@ class_name WPlayerCharacter
 @export var input_parry_mode_name := "parry_mode"
 
 # the wheel handles its own input, we only need to respond to it. praise be.
-@onready var wheel : Wheel = $Control/Wheel
-@onready var debug_label : Label = $Control/Label
+@onready var wheel : Wheel = $CanvasLayer/Control/Wheel
+@onready var debug_label : Label = $CanvasLayer/Control/Label
 
 @export var show_debug_values : bool = true
 

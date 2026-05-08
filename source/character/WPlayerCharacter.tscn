@@ -86,32 +86,6 @@ hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Control" type="Control" parent="." unique_id=346500988]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Wheel" parent="Control" unique_id=147374003 instance=ExtResource("12_76jla")]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -300.0
-offset_right = 300.0
-grow_vertical = 0
-
-[node name="Label" type="Label" parent="Control" unique_id=916332905]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.275
-anchor_bottom = 0.231
-text = "Direction: "
-
 [node name="CollisionHandler" type="Node" parent="." unique_id=1312737658]
 script = ExtResource("13_phaoh")
 metadata/_custom_type_script = "uid://b0itbkw7cytrs"
@@ -142,10 +116,38 @@ transform = Transform3D(0.99984556, -0.017568491, -0.00029054284, 0.017356496, 0
 script = ExtResource("16_hw3yl")
 anim_player = NodePath("../Player/Player/Armature/GeneralSkeleton/AnimationPlayer")
 
-[connection signal="new_dir_chosen" from="Control/Wheel" to="." method="_on_wheel_new_dir_chosen"]
-[connection signal="new_dir_selected" from="Control/Wheel" to="." method="_on_wheel_new_dir_selected"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=882437014]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=346500988]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Wheel" parent="CanvasLayer/Control" unique_id=147374003 instance=ExtResource("12_76jla")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+offset_right = 300.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=916332905]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.275
+anchor_bottom = 0.231
+text = "Direction: "
+
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]
 [connection signal="action_animation_finished" from="AnimationHandler" to="." method="_on_animation_handler_action_animation_finished"]
+[connection signal="new_dir_chosen" from="CanvasLayer/Control/Wheel" to="." method="_on_wheel_new_dir_chosen"]
+[connection signal="new_dir_selected" from="CanvasLayer/Control/Wheel" to="." method="_on_wheel_new_dir_selected"]
 
 [editable path="Player"]
