@@ -7839,7 +7839,3 @@ libraries/Main = SubResource("AnimationLibrary_cs1tg")
 transform = Transform3D(0.99984556, -0.017568491, -0.00029054284, 0.017356496, 0.99008036, -0.13942112, 0.0027370378, 0.13939431, 0.99023324, -0.0448459, 1.7157372, 0.2387715)
 bone_name = "Head"
 bone_idx = 5
-
-[node name="Camera3D" type="Camera3D" parent="Player/Armature/GeneralSkeleton/BoneAttachment3D2" unique_id=1164080199]
-transform = Transform3D(-1.0000002, -1.702574e-08, 1.185108e-07, 3.4924597e-10, 1.0000002, -1.4901161e-08, -8.8475645e-08, 8.940697e-08, -1.0000002, -0.0009448528, 0.08497357, 0.037506223)
-near = 0.128

@@ -12,18 +12,26 @@
 [ext_resource type="Script" uid="uid://bhhgclxxaf853" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="10_65go1"]
 [ext_resource type="Script" uid="uid://brs53isg6clxe" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="11_aj8dk"]
 [ext_resource type="Script" uid="uid://b0itbkw7cytrs" path="res://source/character/w_collision_handler.gd" id="12_riy33"]
+[ext_resource type="PackedScene" uid="uid://ccn52rckndhkf" path="res://scenes/player.tscn" id="13_mms8j"]
+[ext_resource type="Script" uid="uid://bcfkm5dbuibi" path="res://source/game/sword_hitbox.gd" id="14_whdal"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p7ffv"]
+height = 2.25
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_juusd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27sbo"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_75hop"]
+size = Vector3(0.05, 0.5, 0.05)
+
 [node name="WOpponentCharacter" type="CharacterBody3D" unique_id=1047846688]
+collision_layer = 3
 script = ExtResource("1_p468n")
 metadata/_custom_type_script = "uid://b01ee3wqjfu5v"
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=701097188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
 shape = SubResource("CapsuleShape3D_p7ffv")
 
 [node name="Head Check" type="ShapeCast3D" parent="." unique_id=226853547]
@@ -31,7 +39,7 @@ shape = SubResource("SphereShape3D_juusd")
 target_position = Vector3(0, 0.5, 0)
 
 [node name="Head" type="Marker3D" parent="." unique_id=971260847]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.4)
 script = ExtResource("2_27sbo")
 
 [node name="Head Bob" type="Node" parent="Head" unique_id=1217864021]
@@ -79,7 +87,23 @@ script = ExtResource("12_riy33")
 metadata/_custom_type_script = "uid://b0itbkw7cytrs"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1652095438]
+visible = false
 mesh = SubResource("CapsuleMesh_27sbo")
+
+[node name="Player" parent="." unique_id=1970805391 instance=ExtResource("13_mms8j")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.765027, 0)
+
+[node name="HitboxArea3D" type="Area3D" parent="Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2" parent_id_path=PackedInt32Array(1970805391, 362757077) index="2" unique_id=1874878564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68544394, 0)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("14_whdal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2/HitboxArea3D" unique_id=344519276]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009150341, -0.2456271, 0.038652986)
+shape = SubResource("BoxShape3D_75hop")
 
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]
+
+[editable path="Player"]

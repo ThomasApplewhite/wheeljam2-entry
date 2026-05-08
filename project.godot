@@ -19,12 +19,13 @@ config/icon="res://icon.svg"
 
 buses/default_bus_layout="uid://c0rffeiad6c77"
 
-[filesystem]
-
-import/blender/enabled=false
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/character-controller/plugin.cfg", "res://addons/maaacks_game_template/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
