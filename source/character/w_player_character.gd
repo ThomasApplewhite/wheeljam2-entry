@@ -100,3 +100,7 @@ func _on_wheel_new_dir_selected() -> void:
 	var text = "Wheel direction: %d" % wheel.current_direction
 	debug_label.text = text
 	anim_handler.play_action_animation(AnimationHandler.AnimatedAction.STANCE_CHANGE, get_current_anim_stance())
+
+
+func _on_wheel_puzzle_finished() -> void:
+	wheel.reset()

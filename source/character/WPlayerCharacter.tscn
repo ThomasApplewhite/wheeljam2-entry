@@ -149,5 +149,6 @@ text = "Direction: "
 [connection signal="action_animation_finished" from="AnimationHandler" to="." method="_on_animation_handler_action_animation_finished"]
 [connection signal="new_dir_chosen" from="CanvasLayer/Control/Wheel" to="." method="_on_wheel_new_dir_chosen"]
 [connection signal="new_dir_selected" from="CanvasLayer/Control/Wheel" to="." method="_on_wheel_new_dir_selected"]
+[connection signal="puzzle_finished" from="CanvasLayer/Control/Wheel" to="." method="_on_wheel_puzzle_finished"]
 
 [editable path="Player"]
