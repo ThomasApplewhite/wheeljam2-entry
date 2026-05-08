@@ -8,13 +8,7 @@ class_name WOpponentCharacter
 
 
 func _physics_process(delta):
-	# rotate head to face z target
-	var forward = -transform.basis.z
-	var dir_to_target = (ztarget.global_position - global_position).normalized()
-	dir_to_target.y = 0.0
-	var rotate_dir = (dir_to_target - forward)
-	if(dir_to_target.dot(forward) != 1.0):
-		rotate_head(Vector2(rotate_dir.x, rotate_dir.y) * 100.0)
+	_look_at_ztarget()
 	
 	# need to decide how AI does inputs
 	if false and not lock_movement:
