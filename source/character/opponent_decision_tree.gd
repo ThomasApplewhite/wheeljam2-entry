@@ -78,7 +78,7 @@ func get_desired_stance() -> StanceEval:
 
 
 func _evaluate_defense(my_state : ActionState, my_stance : SwordStance, 
-	player_state : ActionState, player_stance : SwordStance) -> Intention:
+	_player_state : ActionState, player_stance : SwordStance) -> Intention:
 	# If stunned and player attacking, try to dodge
 	if my_state == ActionState.STUNNED:
 		_current_intention = Intention.DODGE	
@@ -97,8 +97,8 @@ func _evaluate_defense(my_state : ActionState, my_stance : SwordStance,
 	return _current_intention
 
 
-func _evaluate_offense(my_state : ActionState, my_stance : SwordStance, 
-	player_state : ActionState, player_stance : SwordStance) -> Intention:
+func _evaluate_offense(_my_state : ActionState, _my_stance : SwordStance, 
+	player_state : ActionState, _player_stance : SwordStance) -> Intention:
 	# Move closer if the player is too far away to attack
 	if not player_proximity_raycast.is_colliding():
 		_current_intention = Intention.DODGE

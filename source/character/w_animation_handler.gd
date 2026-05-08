@@ -73,13 +73,13 @@ var playing_action : bool = false
 
 func _ready() -> void:
 	pass
-	#anim_player.animation_finished.connect(animation_finished.emit)
+	anim_player.animation_finished.connect(_anim_action_finished)
 
 
 func play_action_animation(action : AnimatedAction, stance_direction : SwordStance, custom_speed : float = 1.0) -> void:
 	var anim_name = anims[action][stance_direction]
 	anim_player.play(anim_name, -1, custom_speed, false)
-	anim_player.animation_finished.connect(_anim_action_finished, CONNECT_ONE_SHOT)
+	#anim_player.animation_finished.connect(_anim_action_finished, CONNECT_ONE_SHOT)
 	playing_action = true
 
 

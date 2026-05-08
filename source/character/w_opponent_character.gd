@@ -140,8 +140,8 @@ func _change_stance_and_parry() -> void:
 
 func _mark_index_as_used(index : int) -> void:
 	_unused_indicies.erase(index)
-	var move : int = _wheel_values.pop_front()
-	_wheel_values.push_back(move)
+	var wheel_pop : int = _wheel_values.pop_front()
+	_wheel_values.push_back(wheel_pop)
 	
 	if _unused_indicies.is_empty():
 		_unused_indicies = [0, 1, 2, 3]
@@ -152,16 +152,20 @@ func _get_stance_from_eval(stance_eval : StanceEval) -> SwordStance:
 	match(stance_eval):
 		StanceEval.FASTEST:
 			var fastest_stance : int = _wheel_values[_unused_indicies[0]]
+			var fastest_index : int = 0
 			for index in _unused_indicies:
 				if _wheel_values[_unused_indicies[index]] < fastest_stance:
 					fastest_stance = _wheel_values[_unused_indicies[index]]
-			return fastest_stance
+					fastest_index = index
+			return fastest_index as SwordStance
 		StanceEval.BIGGEST:
 			var biggest_stance : int = _wheel_values[_unused_indicies[0]]
+			var biggest_index : int = 0
 			for index in _unused_indicies:
 				if _wheel_values[_unused_indicies[index]] > biggest_stance:
 					biggest_stance = _wheel_values[_unused_indicies[index]]
-			return biggest_stance
+					biggest_index = index
+			return biggest_index as SwordStance
 		StanceEval.MATCH:
 			return player.get_current_stance()
 		StanceEval.MISMATCH:
@@ -169,8 +173,8 @@ func _get_stance_from_eval(stance_eval : StanceEval) -> SwordStance:
 			options.erase(player.get_current_stance() as int)
 			# If we're somehow out of mismatches, just match instead
 			if options.is_empty():
-				return player.get_current_stance() as int
-			return options.pick_random()
+				return player.get_current_stance()
+			return options.pick_random() as SwordStance
 		# If invalid eval, match to block
 		_:
 			return player.get_current_stance()
