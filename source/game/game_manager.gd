@@ -54,6 +54,7 @@ func restart_round() -> void:
 	player.lock_movement = true
 	opponent.global_position = opponent_start.global_position
 	opponent.hp = opponent.max_hp
+	opponent.lock_movement = true
 	
 	#UI thing goes here
 	restart_ui.visible = true
