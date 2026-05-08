@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://bcyhu4r20152q" path="res://source/game/game_manager.gd" id="1_awdnm"]
 [ext_resource type="PackedScene" uid="uid://c15cdg3o5fl7s" path="res://source/character/WPlayerCharacter.tscn" id="2_e7om1"]
 [ext_resource type="PackedScene" uid="uid://og4d7xwedns0" path="res://source/character/WOpponentCharacter.tscn" id="3_jltp2"]
+[ext_resource type="AudioStream" uid="uid://cajnhdt7u2s0s" path="res://assets/audio/fight_jingles/fight_lose-fix.ogg" id="4_vrjq3"]
 [ext_resource type="Script" uid="uid://dj0uav12ij5a5" path="res://source/debug_control.gd" id="4_w3mux"]
 [ext_resource type="Texture2D" uid="uid://svijnbaaeuol" path="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/demo01_PixelSky.png" id="5_1c8qj"]
+[ext_resource type="AudioStream" uid="uid://upcmgu68ug2k" path="res://assets/audio/fight_jingles/fight_begin-fix.ogg" id="5_kcv3h"]
 [ext_resource type="Script" uid="uid://bmy13ib0322y" path="res://addons/character-controller/example/main/level.gd" id="6_5r52i"]
+[ext_resource type="AudioStream" uid="uid://d3hyn1qffm07w" path="res://assets/audio/fight_jingles/fight_win-fix.ogg" id="7_g8cxv"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_awdnm"]
 _surfaces = [{
@@ -37,13 +40,117 @@ ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="GameManager" type="Node" unique_id=858042265 node_paths=PackedStringArray("opponent", "player", "opponent_start", "player_start")]
+[node name="SceneRoot" type="Node" unique_id=1907261897]
+
+[node name="GameManager" type="Node" parent="." unique_id=858042265 node_paths=PackedStringArray("opponent", "player", "opponent_start", "player_start")]
 script = ExtResource("1_awdnm")
 rounds_to_win = 2
-opponent = NodePath("WOpponentCharacter")
-player = NodePath("WPlayerCharacter")
-opponent_start = NodePath("Starts/OpponentStartMarker3D")
-player_start = NodePath("Starts/PlayerStartMarker3D")
+opponent = NodePath("../WOpponentCharacter")
+player = NodePath("../WPlayerCharacter")
+opponent_start = NodePath("../Starts/OpponentStartMarker3D")
+player_start = NodePath("../Starts/PlayerStartMarker3D")
+
+[node name="Timers" type="Node" parent="GameManager" unique_id=1537586683]
+
+[node name="RestartTimer" type="Timer" parent="GameManager/Timers" unique_id=385279852]
+wait_time = 2.0
+one_shot = true
+
+[node name="PreRestartTimer" type="Timer" parent="GameManager/Timers" unique_id=61498362]
+one_shot = true
+
+[node name="GameUI" type="Control" parent="GameManager" unique_id=1947179672]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoundRestart" type="Control" parent="GameManager/GameUI" unique_id=2132513086]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="GameManager/GameUI/RoundRestart" unique_id=229533708]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47200003
+anchor_top = 0.323
+anchor_right = 0.78700006
+anchor_bottom = 0.37800002
+show_percentage = false
+
+[node name="Label" type="Label" parent="GameManager/GameUI/RoundRestart" unique_id=692902198]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47500002
+anchor_top = 0.21100001
+anchor_right = 0.786
+anchor_bottom = 0.31
+text = "ROUND x"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="DebugControl" type="Control" parent="GameManager/GameUI" unique_id=10258727 node_paths=PackedStringArray("player", "opp")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_w3mux")
+player = NodePath("../../../WPlayerCharacter")
+opp = NodePath("../../../WOpponentCharacter")
+
+[node name="StrikePlayerButton" type="Button" parent="GameManager/GameUI/DebugControl" unique_id=2011387311]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.84800005
+anchor_right = 1.0
+anchor_bottom = 0.11100001
+grow_horizontal = 2
+text = "Strike Player"
+
+[node name="StrikeOppButton" type="Button" parent="GameManager/GameUI/DebugControl" unique_id=960145701]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.845
+anchor_top = 0.11100001
+anchor_right = 1.0
+anchor_bottom = 0.21900001
+grow_horizontal = 2
+text = "Strike Opponent
+"
+
+[node name="Label" type="Label" parent="GameManager/GameUI/DebugControl" unique_id=657071700]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85300004
+anchor_top = 0.22200002
+anchor_right = 1.0
+anchor_bottom = 0.34800002
+text = "Player Health: X
+Opponent Health: X"
+horizontal_alignment = 2
+
+[node name="GameAudio" type="Node" parent="GameManager" unique_id=220877233]
+
+[node name="WinAudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager/GameAudio" unique_id=1424318271]
+stream = ExtResource("7_g8cxv")
+bus = &"Music"
+
+[node name="LoseAudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager/GameAudio" unique_id=853396836]
+stream = ExtResource("4_vrjq3")
+bus = &"Music"
+
+[node name="BeginAudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager/GameAudio" unique_id=1757399982]
+stream = ExtResource("5_kcv3h")
+bus = &"Music"
 
 [node name="LevelGeo" type="Node3D" parent="." unique_id=131662953]
 
@@ -74,94 +181,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8648369, 1.9177694)
 [node name="OpponentStartMarker3D" type="Marker3D" parent="Starts" unique_id=889163061]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7444882, -3.7490916)
 
-[node name="Timers" type="Node" parent="." unique_id=1537586683]
-
-[node name="RestartTimer" type="Timer" parent="Timers" unique_id=385279852]
-wait_time = 2.0
-one_shot = true
-
-[node name="PreRestartTimer" type="Timer" parent="Timers" unique_id=61498362]
-one_shot = true
-
-[node name="GameUI" type="Control" parent="." unique_id=1947179672]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="RoundRestart" type="Control" parent="GameUI" unique_id=2132513086]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="GameUI/RoundRestart" unique_id=229533708]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.47200003
-anchor_top = 0.323
-anchor_right = 0.78700006
-anchor_bottom = 0.37800002
-show_percentage = false
-
-[node name="Label" type="Label" parent="GameUI/RoundRestart" unique_id=692902198]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.47500002
-anchor_top = 0.21100001
-anchor_right = 0.786
-anchor_bottom = 0.31
-text = "ROUND x"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_trim_flags = 128
-
-[node name="DebugControl" type="Control" parent="GameUI" unique_id=10258727 node_paths=PackedStringArray("player", "opp")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("4_w3mux")
-player = NodePath("../../WPlayerCharacter")
-opp = NodePath("../../WOpponentCharacter")
-
-[node name="StrikePlayerButton" type="Button" parent="GameUI/DebugControl" unique_id=2011387311]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.84800005
-anchor_right = 1.0
-anchor_bottom = 0.11100001
-grow_horizontal = 2
-text = "Strike Player"
-
-[node name="StrikeOppButton" type="Button" parent="GameUI/DebugControl" unique_id=960145701]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.845
-anchor_top = 0.11100001
-anchor_right = 1.0
-anchor_bottom = 0.21900001
-grow_horizontal = 2
-text = "Strike Opponent
-"
-
-[node name="Label" type="Label" parent="GameUI/DebugControl" unique_id=657071700]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.85300004
-anchor_top = 0.22200002
-anchor_right = 1.0
-anchor_bottom = 0.34800002
-text = "Player Health: X
-Opponent Health: X"
-horizontal_alignment = 2
-
 [node name="Lighting" type="Node" parent="." unique_id=1260760316]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=1028549529]
@@ -175,9 +194,9 @@ directional_shadow_max_distance = 250.0
 [node name="MouseHandler" type="Node3D" parent="." unique_id=349218550]
 script = ExtResource("6_5r52i")
 
-[connection signal="slain" from="WPlayerCharacter" to="." method="_on_w_character_slain"]
-[connection signal="slain" from="WOpponentCharacter" to="." method="_on_w_character_slain"]
-[connection signal="timeout" from="Timers/RestartTimer" to="." method="_on_restart_timer_timeout"]
-[connection signal="timeout" from="Timers/PreRestartTimer" to="." method="_on_pre_restart_timer_timeout"]
-[connection signal="pressed" from="GameUI/DebugControl/StrikePlayerButton" to="GameUI/DebugControl" method="_on_strike_player_button_pressed"]
-[connection signal="pressed" from="GameUI/DebugControl/StrikeOppButton" to="GameUI/DebugControl" method="_on_strike_opp_button_pressed"]
+[connection signal="timeout" from="GameManager/Timers/RestartTimer" to="GameManager" method="_on_restart_timer_timeout"]
+[connection signal="timeout" from="GameManager/Timers/PreRestartTimer" to="GameManager" method="_on_pre_restart_timer_timeout"]
+[connection signal="pressed" from="GameManager/GameUI/DebugControl/StrikePlayerButton" to="GameManager/GameUI/DebugControl" method="_on_strike_player_button_pressed"]
+[connection signal="pressed" from="GameManager/GameUI/DebugControl/StrikeOppButton" to="GameManager/GameUI/DebugControl" method="_on_strike_opp_button_pressed"]
+[connection signal="slain" from="WPlayerCharacter" to="GameManager" method="_on_w_character_slain"]
+[connection signal="slain" from="WOpponentCharacter" to="GameManager" method="_on_w_character_slain"]

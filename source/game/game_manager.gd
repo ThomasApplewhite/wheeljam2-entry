@@ -20,6 +20,10 @@ extends Node
 @onready var restart_ui_bar : ProgressBar = $GameUI/RoundRestart/ProgressBar
 @onready var restart_round_label : Label = $GameUI/RoundRestart/Label
 
+@onready var win_jingle : AudioStreamPlayer = $GameAudio/WinAudioStreamPlayer
+@onready var lose_jingle : AudioStreamPlayer = $GameAudio/LoseAudioStreamPlayer
+@onready var round_start_jingle : AudioStreamPlayer = $GameAudio/BeginAudioStreamPlayer
+
 var _player_wins : int = 0
 var _opp_wins : int = 0
 
@@ -64,15 +68,17 @@ func _on_restart_timer_timeout() -> void:
 	restart_ui.visible = false
 	player.lock_movement = false
 	opponent.lock_movement = false
-	pass # Replace with function body.
+	round_start_jingle.play()
 
 
 func _on_pre_restart_timer_timeout() -> void:
 	if _player_wins >= rounds_to_win:
 		print("Player wins!")
+		win_jingle.play()
 		return
 	if _opp_wins >= rounds_to_win:
 		print("Opponent wins!")
+		lose_jingle.play()
 		return
 	
 	restart_round()
