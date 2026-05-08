@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://ddj86lwa5ebkc"]
+
+[ext_resource type="PackedScene" uid="uid://fghf7vhi8qlc" path="res://Assets/LoafbrrAssets/ModularArena/glb/ModularArena.glb" id="1_aue2f"]
+[ext_resource type="Material" uid="uid://drngtf5wgrowl" path="res://Assets/LoafbrrAssets/ModularArena/Materials/Floor_Brick_Stone_Mat.tres" id="2_5wd54"]
+[ext_resource type="Material" uid="uid://dtl07yw8j1pgb" path="res://Assets/LoafbrrAssets/ModularArena/Materials/Ground_Soil_Mat.tres" id="3_26fm4"]
+[ext_resource type="Material" uid="uid://d0mgjnpliejtp" path="res://Assets/LoafbrrAssets/ModularArena/Materials/Wall_Brick_Stone_Mat.tres" id="4_ej4ii"]
+[ext_resource type="Material" uid="uid://chuix6g3h1gpx" path="res://Assets/LoafbrrAssets/ModularArena/Materials/Wall_Concrete_Mat.tres" id="5_qfct4"]
+[ext_resource type="Material" uid="uid://co3805iv12b6f" path="res://Assets/LoafbrrAssets/ModularArena/Materials/Floor_Brick_Stone_B_Mat.tres" id="6_28mll"]
+[ext_resource type="Texture2D" uid="uid://c4qrsmfktfmtp" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Floor_Brick_Stone/Floor_Brick_Stone_Diffuse_1K.png" id="7_5wd54"]
+[ext_resource type="Shader" uid="uid://vllmbodv5eae" path="res://Assets/LoafbrrAssets/ModularArena/Scenes/MatTest.tres" id="7_26fm4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_unxjk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6b1ym"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wd54"]
+render_priority = 0
+shader = ExtResource("7_26fm4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ba2iw"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(0.26666668, 1, 1, 1)
+albedo_texture = ExtResource("7_5wd54")
+
+[sub_resource type="Shader" id="Shader_5wd54"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.2.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+void vertex() {
+	// Vertex Color is sRGB: Enabled
+	if (!OUTPUT_IS_SRGB) {
+		COLOR.rgb = mix(
+				pow((COLOR.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)),
+				COLOR.rgb * (1.0 / 12.92),
+				lessThan(COLOR.rgb, vec3(0.04045)));
+	}
+
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+
+	// Vertex Color Use as Albedo: Enabled
+	albedo_tex *= COLOR;
+
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_26fm4"]
+render_priority = 0
+shader = SubResource("Shader_5wd54")
+shader_parameter/albedo = Color(0.26666668, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("7_5wd54")
+shader_parameter/albedo_texture_size = Vector2i(1024, 1024)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[node name="Node3D" type="Node3D" unique_id=1158198226]
+
+[node name="ModularArena" parent="." unique_id=532428398 instance=ExtResource("1_aue2f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=506372877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 54.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = ExtResource("2_5wd54")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=1388908366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 57.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = ExtResource("2_5wd54")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="." unique_id=315803808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, 57.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = ExtResource("3_26fm4")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="." unique_id=1468221935]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, 57.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = ExtResource("4_ej4ii")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="." unique_id=1088007813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 57.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = ExtResource("5_qfct4")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="." unique_id=1600092436]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 57.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = ExtResource("6_28mll")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=2106315123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.25, 0, 54.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = SubResource("StandardMaterial3D_6b1ym")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="." unique_id=1397928252]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, 0, 52.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = SubResource("StandardMaterial3D_6b1ym")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="." unique_id=1532750504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 54.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = SubResource("ShaderMaterial_5wd54")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="." unique_id=1557041382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.75, 0, 54.25)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = SubResource("StandardMaterial3D_ba2iw")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="." unique_id=1626493305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.75, 0, 51.5)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = SubResource("StandardMaterial3D_ba2iw")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="." unique_id=28818595]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.75, 0, 51.5)
+mesh = SubResource("BoxMesh_unxjk")
+surface_material_override/0 = SubResource("ShaderMaterial_26fm4")

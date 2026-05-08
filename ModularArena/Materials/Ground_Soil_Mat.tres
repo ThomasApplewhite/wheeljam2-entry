@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dtl07yw8j1pgb"]
+
+[ext_resource type="Shader" uid="uid://di2521kt6l3ol" path="res://Assets/LoafbrrAssets/ModularArena/Materials/ORM_Shader_Cull_Back.gdshader" id="1_pd2nf"]
+[ext_resource type="Texture2D" uid="uid://c5u6gfgx5qqks" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Ground_Soil/Ground_Soil_Diffuse_2K.png" id="2_srkhw"]
+[ext_resource type="Texture2D" uid="uid://l7ut0x0fmi4x" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Ground_Soil/Ground_Soil_Normal_2K.png" id="3_flysb"]
+[ext_resource type="Texture2D" uid="uid://b4i5dfo8oqwxl" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Noises/NoiseB_Tiled123v2.png" id="3_srkhw"]
+[ext_resource type="Texture2D" uid="uid://cg4yxvvewuet0" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Ground_Soil/Ground_Soil_ORM_2K.png" id="4_fi8s4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_pd2nf")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_srkhw")
+shader_parameter/texture_orm = ExtResource("4_fi8s4")
+shader_parameter/ao_light_affect = 0.12999999709424
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/texture_normal = ExtResource("3_flysb")
+shader_parameter/normal_scale = 1.0
+shader_parameter/emission = Color(0, 0, 0, 1)
+shader_parameter/emission_energy = 0.0
+shader_parameter/alpha_scissor_threshold = 0.9
+shader_parameter/noise_color = Color(0.75, 0.75, 0.75, 1)
+shader_parameter/texture_noise = ExtResource("3_srkhw")
+shader_parameter/noise_str = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)

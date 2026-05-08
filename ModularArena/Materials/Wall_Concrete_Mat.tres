@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://chuix6g3h1gpx"]
+
+[ext_resource type="Shader" uid="uid://di2521kt6l3ol" path="res://Assets/LoafbrrAssets/ModularArena/Materials/ORM_Shader_Cull_Back.gdshader" id="1_2sm8m"]
+[ext_resource type="Texture2D" uid="uid://c5h2blorg30p6" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Wall_concrete/Wall_Concrete_Diffuse_2K.png" id="2_nhg4q"]
+[ext_resource type="Texture2D" uid="uid://c1cj0t2ug2yrj" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Wall_concrete/Wall_Concrete_Normal_2K.png" id="3_mkgmv"]
+[ext_resource type="Texture2D" uid="uid://dcetop851lobr" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Noises/NoiseE_Tiled123v2.png" id="3_nhg4q"]
+[ext_resource type="Texture2D" uid="uid://cgpauffuhyq7g" path="res://Assets/LoafbrrAssets/ModularArena/Textures/Wall_concrete/Wall_Concrete_ORM_2K.png" id="4_jbysx"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2sm8m")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_nhg4q")
+shader_parameter/texture_orm = ExtResource("4_jbysx")
+shader_parameter/ao_light_affect = 0.0999999977648
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/texture_normal = ExtResource("3_mkgmv")
+shader_parameter/normal_scale = 1.0
+shader_parameter/emission = Color(0, 0, 0, 1)
+shader_parameter/emission_energy = 0.0
+shader_parameter/alpha_scissor_threshold = 0.9
+shader_parameter/noise_color = Color(0.75, 0.75, 0.75, 1)
+shader_parameter/texture_noise = ExtResource("3_nhg4q")
+shader_parameter/noise_str = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
