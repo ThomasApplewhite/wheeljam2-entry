@@ -15,10 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://ccn52rckndhkf" path="res://scenes/player.tscn" id="13_mms8j"]
 [ext_resource type="Script" uid="uid://bcfkm5dbuibi" path="res://source/game/sword_hitbox.gd" id="14_whdal"]
 [ext_resource type="Script" uid="uid://c4dpa4xc70k1v" path="res://source/character/w_animation_handler.gd" id="15_whdal"]
-[ext_resource type="AudioStream" uid="uid://dde5lku6xaiy3" path="res://assets/audio/sword_sounds/blade_parry.ogg" id="15_yb1ot"]
-[ext_resource type="AudioStream" uid="uid://bsuleqfubvksg" path="res://assets/audio/sword_sounds/blade_slash.ogg" id="16_65go1"]
-[ext_resource type="AudioStream" uid="uid://d4ki7rlw2dhmu" path="res://assets/audio/sword_sounds/blade_swipe.ogg" id="16_75hop"]
-[ext_resource type="AudioStream" uid="uid://cupbo6mu3bcm" path="res://assets/audio/sword_sounds/brain_hit_object.ogg" id="17_aj8dk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p7ffv"]
 height = 2.25
@@ -29,20 +25,6 @@ height = 2.25
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_75hop"]
 size = Vector3(0.05, 0.5, 0.05)
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_riy33"]
-random_pitch = 1.3348398
-random_volume_offset_db = 3.0
-streams_count = 3
-stream_0/stream = ExtResource("15_yb1ot")
-stream_1/stream = ExtResource("16_65go1")
-stream_2/stream = ExtResource("17_aj8dk")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_75hop"]
-random_pitch = 1.3348398
-random_volume_offset_db = 3.0
-streams_count = 1
-stream_0/stream = ExtResource("16_75hop")
 
 [node name="WOpponentCharacter" type="CharacterBody3D" unique_id=1047846688 node_paths=PackedStringArray("sword", "anim_handler")]
 collision_layer = 3
@@ -124,9 +106,6 @@ script = ExtResource("14_whdal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009150341, -0.2456271, 0.038652986)
 shape = SubResource("BoxShape3D_75hop")
 
-[node name="AudioConnect" type="AudioStreamPlayer3D" parent="Player/Player/Armature/GeneralSkeleton/BoneAttachment3D/Katana2/HitboxArea3D" unique_id=1894876025]
-stream = SubResource("AudioStreamRandomizer_riy33")
-
 [node name="AnimationHandler" type="Node" parent="." unique_id=1434950364 node_paths=PackedStringArray("anim_player")]
 script = ExtResource("15_whdal")
 anim_player = NodePath("../Player/Player/Armature/GeneralSkeleton/AnimationPlayer")
@@ -134,9 +113,6 @@ anim_player = NodePath("../Player/Player/Armature/GeneralSkeleton/AnimationPlaye
 [node name="PlayerCLoseRayCast3D" type="RayCast3D" parent="." unique_id=351701685]
 target_position = Vector3(0, 0, -2)
 collision_mask = 2
-
-[node name="AudioSwing" type="AudioStreamPlayer3D" parent="." unique_id=63653725]
-stream = SubResource("AudioStreamRandomizer_75hop")
 
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]

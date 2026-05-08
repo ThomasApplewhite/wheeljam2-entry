@@ -12,7 +12,6 @@ class_name WPlayerCharacter
 # the wheel handles its own input, we only need to respond to it. praise be.
 @onready var wheel : Wheel = $CanvasLayer/Control/Wheel
 @onready var debug_label : Label = $CanvasLayer/Control/Label
-@onready var audio_swing = $AudioSwing
 
 @export var show_debug_values : bool = true
 
@@ -76,8 +75,6 @@ func _on_wheel_new_dir_chosen(payload: RefCounted) -> void:
 	
 	# What is damage? idk, put 10 here for now
 	sword.start_attack_active(payload.slice_value, 10)
-	if audio_swing.playing != true:
-		audio_swing.playing = true
 	current_state = ActionState.STRIKING
 	# hell yeah brother it's the inline dictionary lookup
 	var attack_speed : float = {

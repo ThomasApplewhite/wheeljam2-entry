@@ -1,8 +1,6 @@
 extends Area3D
 class_name WSwordHitbox
 
-@onready var audio_connect = $AudioConnect
-
 ## Sword Hitboxes handle both collisions and the damage that attacks deal
 const character_hitbox_layer : int = 2
 
@@ -26,10 +24,6 @@ func end_attack_active() -> void:
 
 
 func _on_body_entered(body : Node3D):
-	# making it sound pretty
-	if audio_connect.playing != true:
-		audio_connect.playing = true
-	
 	var wcharacter : WCharacter = body as WCharacter
 	if not wcharacter:
 		return
