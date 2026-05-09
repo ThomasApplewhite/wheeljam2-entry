@@ -10,6 +10,7 @@ extends Node
 @export var opponent : WCharacter
 @export var player : WCharacter
 @export var gameover_camera : Camera3D
+@export_file("*.tscn") var main_menu_scenepath : String
 
 @export var opponent_start : Marker3D
 @export var player_start : Marker3D
@@ -35,6 +36,8 @@ var _rounds : int = 1
 
 func _ready() -> void:
 	restart_round()
+	win_jingle.finished.connect(_return_to_menu)
+	lose_jingle.finished.connect(_return_to_menu)
 
 
 func _process(_delta: float) -> void:
@@ -110,3 +113,7 @@ func _on_pre_restart_timer_timeout() -> void:
 
 func _on_w_character_slain(who: WCharacter) -> void:
 	prerestart_round(who)
+	
+
+func _return_to_menu() -> void:
+	get_tree().change_scene_to_file(main_menu_scenepath)
