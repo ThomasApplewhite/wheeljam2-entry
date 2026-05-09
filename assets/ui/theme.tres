@@ -13,4 +13,5 @@ texture = SubResource("AtlasTexture_omlnh")
 [resource]
 default_font = ExtResource("2_fenpc")
 Button/colors/font_color = Color(0, 0, 0, 1)
+Panel/styles/panel = null
 ProgressBar/styles/background = SubResource("StyleBoxTexture_lvrds")

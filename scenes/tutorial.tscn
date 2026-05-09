@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://3x1mpiv3m1pi"]
+
+[ext_resource type="Texture2D" uid="uid://bs64ovry35d3a" path="res://assets/ui/keys/pxkw_space_4.png" id="1_c13y7"]
+[ext_resource type="Texture2D" uid="uid://dgkxryef36lyl" path="res://assets/ui/keys/pxkw_shift_icon.png" id="1_g2equ"]
+[ext_resource type="Theme" uid="uid://d1ljat6j7kbqy" path="res://assets/ui/theme.tres" id="3_tbcdj"]
+[ext_resource type="Texture2D" uid="uid://ct6vgbcn3uvbs" path="res://assets/ui/keys/pxkw_w.png" id="4_ej4tf"]
+[ext_resource type="Texture2D" uid="uid://bkynmxytkur0p" path="res://assets/ui/keys/pxkw_s.png" id="5_0hilk"]
+[ext_resource type="Texture2D" uid="uid://y0p1iopnf2by" path="res://assets/ui/keys/pxkw_d.png" id="6_wr8iv"]
+[ext_resource type="Texture2D" uid="uid://0341q1jvdg4a" path="res://assets/ui/keys/pxkw_a.png" id="7_e13mp"]
+[ext_resource type="Texture2D" uid="uid://lom0wesswhqf" path="res://assets/ui/keys/pxkw_arrow_up.png" id="8_vrdqu"]
+[ext_resource type="Texture2D" uid="uid://pmynd4y3dk4g" path="res://assets/ui/keys/pxkw_arrow_right.png" id="9_cmspm"]
+[ext_resource type="Texture2D" uid="uid://cg4lppmgyktda" path="res://assets/ui/keys/pxkw_arrow_left.png" id="10_ikfo1"]
+[ext_resource type="Texture2D" uid="uid://do5055yygtqpd" path="res://assets/ui/keys/pxkw_arrow_down.png" id="11_dwom6"]
+
+[sub_resource type="Gradient" id="Gradient_8ho6b"]
+offsets = PackedFloat32Array(0, 0.813253)
+colors = PackedColorArray(0, 0, 0, 1, 0.59787583, 0.32565114, 0.37649843, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ph3nu"]
+gradient = SubResource("Gradient_8ho6b")
+fill_from = Vector2(0, 1)
+
+[node name="Tutorial" type="Control" unique_id=263675597]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1538189517]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ph3nu")
+
+[node name="Control" type="Control" parent="." unique_id=2029768027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PxkwShiftIcon" type="Sprite2D" parent="Control" unique_id=955327845]
+texture_filter = 1
+position = Vector2(659, 426)
+scale = Vector2(4, 4)
+texture = ExtResource("1_g2equ")
+
+[node name="PxkwSpace5" type="Sprite2D" parent="Control" unique_id=1090173243]
+texture_filter = 1
+position = Vector2(885, 426)
+scale = Vector2(4, 4)
+texture = ExtResource("1_c13y7")
+
+[node name="StepMove" type="Label" parent="Control" unique_id=1382510406]
+texture_filter = 1
+layout_mode = 0
+offset_left = 126.0
+offset_top = 249.0
+offset_right = 238.0
+offset_bottom = 273.0
+scale = Vector2(2.3152883, 2.3152883)
+theme = ExtResource("3_tbcdj")
+text = "Step/Move"
+horizontal_alignment = 1
+
+[node name="PxkwW" type="Sprite2D" parent="Control/StepMove" unique_id=1292280146]
+texture_filter = 1
+position = Vector2(52.693226, -45.350723)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("4_ej4tf")
+
+[node name="PxkwS" type="Sprite2D" parent="Control/StepMove" unique_id=847089067]
+texture_filter = 1
+position = Vector2(52.693226, -17.708374)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("5_0hilk")
+
+[node name="PxkwD" type="Sprite2D" parent="Control/StepMove" unique_id=1129397958]
+texture_filter = 1
+position = Vector2(78.607925, -17.708374)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("6_wr8iv")
+
+[node name="PxkwA" type="Sprite2D" parent="Control/StepMove" unique_id=33342415]
+texture_filter = 1
+position = Vector2(26.778522, -17.708374)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("7_e13mp")
+
+[node name="ChangeStance" type="Label" parent="Control" unique_id=937667342]
+texture_filter = 1
+layout_mode = 0
+offset_left = 637.0
+offset_top = 249.0
+offset_right = 785.0
+offset_bottom = 273.0
+scale = Vector2(2.3152883, 2.3152883)
+theme = ExtResource("3_tbcdj")
+text = "Change Stance"
+horizontal_alignment = 1
+
+[node name="PxkwArrowUp" type="Sprite2D" parent="Control/ChangeStance" unique_id=11763713]
+texture_filter = 1
+position = Vector2(72.56116, -46.214546)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("8_vrdqu")
+
+[node name="PxkwArrowRight" type="Sprite2D" parent="Control/ChangeStance" unique_id=1545189407]
+texture_filter = 1
+position = Vector2(98.47586, -18.572197)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("9_cmspm")
+
+[node name="PxkwArrowLeft" type="Sprite2D" parent="Control/ChangeStance" unique_id=1868140353]
+texture_filter = 1
+position = Vector2(46.646454, -18.572197)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("10_ikfo1")
+
+[node name="PxkwArrowDown" type="Sprite2D" parent="Control/ChangeStance" unique_id=982787821]
+texture_filter = 1
+position = Vector2(72.56116, -18.572197)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("11_dwom6")
+
+[node name="Attack" type="Label" parent="Control" unique_id=331137225]
+texture_filter = 1
+layout_mode = 0
+offset_left = 126.0
+offset_top = 476.0
+offset_right = 238.0
+offset_bottom = 500.0
+scale = Vector2(2.3152883, 2.3152883)
+theme = ExtResource("3_tbcdj")
+text = "Attack"
+horizontal_alignment = 1
+
+[node name="PxkwSpace4" type="Sprite2D" parent="Control/Attack" unique_id=676823180]
+texture_filter = 1
+position = Vector2(54.42087, -21.595596)
+scale = Vector2(1.7276467, 1.7276467)
+texture = ExtResource("1_c13y7")
+
+[node name="Parry" type="Label" parent="Control" unique_id=125666031]
+texture_filter = 1
+layout_mode = 0
+offset_left = 656.00006
+offset_top = 476.0
+offset_right = 768.00006
+offset_bottom = 500.0
+scale = Vector2(2.3152883, 2.3152883)
+theme = ExtResource("3_tbcdj")
+text = "Parry"
+horizontal_alignment = 1
+
+[node name="Plus" type="Label" parent="Control/Parry" unique_id=1402506024]
+texture_filter = 1
+layout_mode = 0
+offset_left = 15.980692
+offset_top = -35.41675
+offset_right = 55.98069
+offset_bottom = -11.416752
+theme = ExtResource("3_tbcdj")
+text = "+"
+horizontal_alignment = 1
