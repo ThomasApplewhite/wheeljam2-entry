@@ -9,6 +9,7 @@ extends Node
 @export_category("Scene Exports")
 @export var opponent : WCharacter
 @export var player : WCharacter
+@export var gameover_camera : Camera3D
 
 @export var opponent_start : Marker3D
 @export var player_start : Marker3D
@@ -19,6 +20,9 @@ extends Node
 @onready var restart_ui : Control = $CanvasLayer/GameUI/RoundRestart
 @onready var restart_ui_bar = $CanvasLayer/GameUI/RoundRestart/ProgressBar
 @onready var restart_round_label : Label = $CanvasLayer/GameUI/RoundRestart/Label
+
+@onready var gameover_ui : Control = $CanvasLayer/GameUI/EndOfGameControl
+@onready var gameover_label : Control = $CanvasLayer/GameUI/EndOfGameControl/Label
 
 @onready var win_jingle : AudioStreamPlayer = $GameAudio/WinAudioStreamPlayer
 @onready var lose_jingle : AudioStreamPlayer = $GameAudio/LoseAudioStreamPlayer
@@ -37,12 +41,15 @@ func _process(_delta: float) -> void:
 	restart_ui_bar.value = restart_timer.time_left
 
 
-func prerestart_round(winner : WCharacter) -> void:
+func prerestart_round(slain : WCharacter) -> void:
+	player.lock_movement = true
+	opponent.lock_movement = true
+	
 	_rounds += 1
-	if winner == player:
-		_player_wins += 1
-	else:
+	if slain == player:
 		_opp_wins += 1
+	else:
+		_player_wins += 1
 	
 	prerestart_timer.start()
 
@@ -50,11 +57,13 @@ func prerestart_round(winner : WCharacter) -> void:
 func restart_round() -> void:
 	# set positions and do something on the UI
 	player.global_position = player_start.global_position
-	player.hp = player.max_hp
-	player.lock_movement = true
 	opponent.global_position = opponent_start.global_position
-	opponent.hp = opponent.max_hp
-	opponent.lock_movement = true
+	
+	for in_char in [player, opponent]:
+		in_char.hp = in_char.max_hp
+		in_char.lock_movement = true
+		in_char.anim_handler.play_action_animation(AnimationHandler.AnimatedAction.STANCE_CHANGE, 
+			AnimationHandler.SwordStance.NORTH)
 	
 	#UI thing goes here
 	restart_ui.visible = true
@@ -63,6 +72,28 @@ func restart_round() -> void:
 	
 	restart_timer.start()
 
+
+func _handle_win() -> bool:
+	if _player_wins < rounds_to_win and _opp_wins < rounds_to_win:
+		return false
+	
+	var win_text : String
+	if _player_wins >= rounds_to_win:
+		win_text = "You Win!"
+		win_jingle.play()
+	if _opp_wins >= rounds_to_win:
+		win_text = "You Lose"
+		lose_jingle.play()
+	
+	player.disable_anims_for_gameover()
+	opponent.disable_anims_for_gameover()
+	
+	gameover_camera.make_current()
+	gameover_label.text = win_text
+	print(win_text)
+	gameover_ui.visible = true
+	
+	return true
 
 func _on_restart_timer_timeout() -> void:
 	#start fight!
@@ -73,16 +104,8 @@ func _on_restart_timer_timeout() -> void:
 
 
 func _on_pre_restart_timer_timeout() -> void:
-	if _player_wins >= rounds_to_win:
-		print("Player wins!")
-		win_jingle.play()
-		return
-	if _opp_wins >= rounds_to_win:
-		print("Opponent wins!")
-		lose_jingle.play()
-		return
-	
-	restart_round()
+	if not _handle_win():
+		restart_round()
 
 
 func _on_w_character_slain(who: WCharacter) -> void:

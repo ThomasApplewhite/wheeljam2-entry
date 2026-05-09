@@ -64,6 +64,14 @@ func get_current_stance() -> SwordStance:
 	return SwordStance.NORTH
 
 
+func get_current_anim_stance() -> AnimationHandler.SwordStance:
+	return AnimationHandler.SwordStance.NORTH
+
+
+func disable_anims_for_gameover() -> void:
+	anim_handler.disabled_by_gameend = true
+
+
 func _look_at_ztarget() -> void:
 	# rotate head to face z target
 	look_at(ztarget.global_position)

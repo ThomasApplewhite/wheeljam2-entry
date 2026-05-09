@@ -70,6 +70,7 @@ bob_curve = ExtResource("4_68goq")
 [node name="FirstPersonCameraReference" type="Marker3D" parent="Head" unique_id=638949349]
 
 [node name="Camera3D" type="Camera3D" parent="Head/FirstPersonCameraReference" unique_id=1663983848]
+current = true
 
 [node name="ThirdPersonCameraReference" type="Marker3D" parent="Head" unique_id=377057843]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)

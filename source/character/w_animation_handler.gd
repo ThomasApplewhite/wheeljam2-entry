@@ -10,6 +10,8 @@ signal action_animation_finished(anim_name : String)
 
 @export var anim_player : AnimationPlayer
 
+var disabled_by_gameend : bool = false
+
 enum SwordStance {
 	NORTH,
 	EAST,
@@ -72,11 +74,13 @@ var playing_action : bool = false
 
 
 func _ready() -> void:
-	pass
 	anim_player.animation_finished.connect(_anim_action_finished)
 
 
 func play_action_animation(action : AnimatedAction, stance_direction : SwordStance, custom_speed : float = 1.0) -> void:
+	if disabled_by_gameend:
+		return
+		
 	var anim_name = anims[action][stance_direction]
 	anim_player.play(anim_name, -1, custom_speed, false)
 	#anim_player.animation_finished.connect(_anim_action_finished, CONNECT_ONE_SHOT)
@@ -87,10 +91,11 @@ func _anim_action_finished(anim_name : String) -> void:
 	action_animation_finished.emit(anim_name)
 
 	# If this was a block (or death) anim, we're done.
-	var stop : bool = stance_anims.values().has(anim_name) or death_anims.values().has(anim_name)
-	if stop:
+	
+	if stance_anims.values().has(anim_name) or death_anims.values().has(anim_name):
 		playing_action = false
 		return
+	
 	var anim_stance = _get_stance_anim_was_in(anim_name)
 	play_action_animation(AnimatedAction.STANCE_CHANGE, anim_stance)
 
